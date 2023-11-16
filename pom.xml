@@ -15,25 +15,25 @@
         </license>
     </licenses>
 
-<!--    <scm>-->
-<!--        <connection>scm:git:https://gitee.com/linjpxc-open/enumx</connection>-->
-<!--        <developerConnection>scm:git:https://gitee.com/linjpxc-open/enumx</developerConnection>-->
-<!--        <url>https://gitee.com/linjpxc-open/enumx</url>-->
-<!--    </scm>-->
+    <scm>
+        <connection>scm:git:https://gitee.com/maarlakes/enumx</connection>
+        <developerConnection>scm:git:https://gitee.com/maarlakes/enumx</developerConnection>
+        <url>https://gitee.com/maarlakes/enumx</url>
+    </scm>
 
-<!--    <developers>-->
-<!--        <developer>-->
-<!--            <name>linjpxc</name>-->
-<!--            <email>815488987@qq.com</email>-->
-<!--        </developer>-->
-<!--    </developers>-->
+    <developers>
+        <developer>
+            <name>linjpxc</name>
+            <email>815488987@qq.com</email>
+        </developer>
+    </developers>
 
     <name>enumx</name>
     <description>
         enumx 提供枚举值的统一接口，枚举值扩展接口，以及一些常见的枚举工具方法。
     </description>
 
-<!--    <url>https://gitee.com/linjpxc-open/enumx</url>-->
+    <url>https://gitee.com/maarlakes/enumx</url>
 
     <properties>
         <encoding>UTF-8</encoding>
