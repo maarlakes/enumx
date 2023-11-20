@@ -1,6 +1,6 @@
-package cn.marrlakes.enumx.jackson;
+package cn.maarlakes.enumx.jackson;
 
-import cn.marrlakes.enumx.Valuable;
+import cn.maarlakes.enumx.Valuable;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;

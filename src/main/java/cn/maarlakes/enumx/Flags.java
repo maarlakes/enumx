@@ -1,4 +1,4 @@
-package cn.marrlakes.enumx;
+package cn.maarlakes.enumx;
 
 import jakarta.annotation.Nonnull;
 
@@ -97,6 +97,7 @@ public final class Flags {
         return Arrays.stream(flagsType.getDeclaredMethods())
                 .filter(item -> Modifier.isStatic(item.getModifiers()))
                 .filter(item -> item.getParameterCount() == 1)
+                .filter(item -> item.getReturnType() == flagsType)
                 .filter(item -> {
                     final Class<?> parameterType = item.getParameterTypes()[0];
                     if (parameterType.isAssignableFrom(valueType)) {

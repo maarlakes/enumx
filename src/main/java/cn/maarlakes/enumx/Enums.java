@@ -1,4 +1,4 @@
-package cn.marrlakes.enumx;
+package cn.maarlakes.enumx;
 
 
 import jakarta.annotation.Nonnull;

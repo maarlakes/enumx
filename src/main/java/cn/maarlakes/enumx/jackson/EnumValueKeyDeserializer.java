@@ -1,7 +1,7 @@
-package cn.marrlakes.enumx.jackson;
+package cn.maarlakes.enumx.jackson;
 
-import cn.marrlakes.enumx.EnumValue;
-import cn.marrlakes.enumx.Enums;
+import cn.maarlakes.enumx.EnumValue;
+import cn.maarlakes.enumx.Enums;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.KeyDeserializer;
 import jakarta.annotation.Nonnull;
