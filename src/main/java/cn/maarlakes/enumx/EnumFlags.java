@@ -5,6 +5,9 @@ import jakarta.annotation.Nonnull;
 import java.lang.reflect.Array;
 import java.util.*;
 
+/**
+ * @author linjpxc
+ */
 public interface EnumFlags<F extends EnumFlags<F, E, V>, E extends Enum<E> & EnumValue<E, V>, V> extends Iterable<E>, Valuable<V> {
 
     default boolean contains(F flag) {

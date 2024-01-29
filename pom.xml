@@ -6,7 +6,7 @@
 
     <groupId>cn.maarlakes</groupId>
     <artifactId>enumx</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 
     <licenses>
         <license>
@@ -43,6 +43,7 @@
         <jakarta.annotation-api.version>2.1.1</jakarta.annotation-api.version>
 
         <jackson.version>2.11.0</jackson.version>
+        <fastjson2.version>2.0.45</fastjson2.version>
     </properties>
 
     <dependencies>
@@ -57,6 +58,12 @@
             <artifactId>jackson-databind</artifactId>
             <optional>true</optional>
             <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <optional>true</optional>
+            <version>${fastjson2.version}</version>
         </dependency>
     </dependencies>
 
