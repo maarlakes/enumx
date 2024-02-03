@@ -28,11 +28,14 @@ abstract class BaseValueDeserializer<T extends Valuable<V>, V> extends StdDeseri
     @Override
     public T deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
         if (Number.class.isAssignableFrom(this.valueType)) {
-            final Number number = p.getNumberValue();
-            if (number == null) {
-                return null;
+            try {
+                final Number number = p.getNumberValue();
+                if (number == null) {
+                    return null;
+                }
+                return this.deserializer(convertValue(number));
+            } catch (Exception ignored) {
             }
-            return this.deserializer(convertValue(number));
         }
         String text = p.getText();
         if (text == null) {
