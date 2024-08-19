@@ -4,6 +4,7 @@ package cn.maarlakes.enumx;
 import jakarta.annotation.Nonnull;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class Enums {
     private Enums() {
@@ -11,6 +12,8 @@ public final class Enums {
 
     private static final String TRUE = "true";
     private static final String FALSE = "false";
+
+    private static final Map<Class<?>, EnumFactory<?>> NEW_ENUM_VALUES = new ConcurrentHashMap<>();
 
     @Nonnull
     public static <E extends Enum<E> & EnumValue<E, V>, V> Class<V> getValueType(@Nonnull Class<E> clazz) {
@@ -53,29 +56,38 @@ public final class Enums {
      */
     @Nonnull
     public static <E extends Enum<E> & EnumValue<E, V>, V> E valueOf(@Nonnull Class<E> enumType, @Nonnull Class<V> valueType, @Nonnull Object value, boolean primitiveConvert) {
-        final E[] enumConstants = enumType.getEnumConstants();
-        if (isPrimitiveOrEnumValueType(valueType, primitiveConvert, value)) {
-            final Object primitiveValue = convertPrimitive(valueType, value, primitiveConvert);
-            for (E item : enumConstants) {
-                if (item.value().equals(value)) {
-                    return item;
-                } else if (primitiveValue != null && primitiveValue.equals(item.value())) {
-                    return item;
-                }
-            }
+        final E e = valueOf0(enumType, valueType, value, primitiveConvert);
+        if (e != null) {
+            return e;
         }
-
-        final String name = value.toString();
-        for (E item : enumConstants) {
-            if (item.name().equals(name)) {
-                return item;
-            }
-            if (item.name().equalsIgnoreCase(name)) {
-                return item;
-            }
-        }
-        throw new IllegalArgumentException("No enum constant " + enumType.getCanonicalName() + "." + name);
+        throw new IllegalArgumentException("No enum constant " + enumType.getCanonicalName() + "." + value);
     }
+
+    @Nonnull
+    public static <E extends Enum<E> & EnumValue<E, V>, V> E getOrCreate(@Nonnull Class<E> enumType, @Nonnull Object value) {
+        return getOrCreate(enumType, value, false);
+    }
+
+    @Nonnull
+    public static <E extends Enum<E> & EnumValue<E, V>, V> E getOrCreate(@Nonnull Class<E> enumType, @Nonnull Class<V> valueType, @Nonnull Object value) {
+        return getOrCreate(enumType, valueType, value, false);
+    }
+
+    @Nonnull
+    public static <E extends Enum<E> & EnumValue<E, V>, V> E getOrCreate(@Nonnull Class<E> enumType, @Nonnull Object value, boolean primitiveConvert) {
+        return getOrCreate(enumType, getValueType(enumType), value, primitiveConvert);
+    }
+
+    @Nonnull
+    @SuppressWarnings("unchecked")
+    public static <E extends Enum<E> & EnumValue<E, V>, V> E getOrCreate(@Nonnull Class<E> enumType, @Nonnull Class<V> valueType, @Nonnull Object value, boolean primitiveConvert) {
+        final E e = valueOf0(enumType, valueType, value, primitiveConvert);
+        if (e != null) {
+            return e;
+        }
+        return (E) NEW_ENUM_VALUES.computeIfAbsent(enumType, k -> new EnumFactory<>(enumType)).createEnum(value);
+    }
+
 
     /**
      * 返回指定名称的枚举常量。该名称与此类型中声明的枚举常量的标识，忽略大小写比较（不允许使用多余的空白字符）。
@@ -160,6 +172,16 @@ public final class Enums {
         return false;
     }
 
+    public static <E extends Enum<E>> boolean exists(@Nonnull Class<E> enumType, @Nonnull E value) {
+        final E[] enumConstants = enumType.getEnumConstants();
+        for (E enumConstant : enumConstants) {
+            if (enumConstant == value) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Nonnull
     public static <E extends Enum<E>> List<E> list(@Nonnull Class<E> enumType) {
         return new ArrayList<>(Arrays.asList(enumType.getEnumConstants()));
@@ -200,5 +222,32 @@ public final class Enums {
         } catch (Exception ignored) {
             return null;
         }
+    }
+
+    private static <E extends Enum<E> & EnumValue<E, V>, V> E valueOf0(@Nonnull Class<E> enumType, @Nonnull Class<V> valueType, @Nonnull Object value, boolean primitiveConvert) {
+        final E[] enumConstants = enumType.getEnumConstants();
+        if (isPrimitiveOrEnumValueType(valueType, primitiveConvert, value)) {
+            final Object primitiveValue = convertPrimitive(valueType, value, primitiveConvert);
+            for (E item : enumConstants) {
+                if (item.value().equals(value)) {
+                    return item;
+                } else if (primitiveValue != null && primitiveValue.equals(item.value())) {
+                    return item;
+                }
+            }
+        }
+
+        final String name = value.toString();
+        for (E item : enumConstants) {
+            if (item.name().equals(name)) {
+                return item;
+            }
+        }
+        for (E item : enumConstants) {
+            if (item.name().equalsIgnoreCase(name)) {
+                return item;
+            }
+        }
+        return null;
     }
 }

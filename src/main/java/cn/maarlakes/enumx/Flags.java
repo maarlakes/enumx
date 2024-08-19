@@ -150,10 +150,7 @@ public final class Flags {
         }
 
         if (primitiveConvert) {
-            final Object castValue = ClassUtils.convertPrimitive(parameterType, value);
-            if (castValue != null) {
-                return castValue;
-            }
+            return ClassUtils.convertPrimitive(parameterType, value);
         }
         return null;
     }

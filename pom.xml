@@ -6,7 +6,7 @@
 
     <groupId>cn.maarlakes</groupId>
     <artifactId>enumx</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
 
     <licenses>
         <license>
@@ -44,6 +44,7 @@
 
         <jackson.version>2.11.0</jackson.version>
         <fastjson2.version>2.0.45</fastjson2.version>
+        <slf4j.version>2.0.0</slf4j.version>
     </properties>
 
     <dependencies>
@@ -64,6 +65,13 @@
             <artifactId>fastjson2</artifactId>
             <optional>true</optional>
             <version>${fastjson2.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <optional>true</optional>
+            <version>${slf4j.version}</version>
         </dependency>
     </dependencies>
 
